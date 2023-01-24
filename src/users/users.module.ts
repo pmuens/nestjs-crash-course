@@ -5,6 +5,7 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { UsersController } from './controllers/users/users.controller';
+import { AnotherMiddleware } from './middlewares/another/another.middleware';
 import { ExampleMiddleware } from './middlewares/example/example.middleware';
 import { UsersService } from './services/users/users.service';
 
@@ -14,9 +15,13 @@ import { UsersService } from './services/users/users.service';
 })
 export class UsersModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(ExampleMiddleware).forRoutes({
-      path: 'users',
-      method: RequestMethod.GET,
-    });
+    consumer
+      .apply(ExampleMiddleware)
+      .forRoutes({
+        path: 'users',
+        method: RequestMethod.GET,
+      })
+      .apply(AnotherMiddleware)
+      .forRoutes(UsersController);
   }
 }
