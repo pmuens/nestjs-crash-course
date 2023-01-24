@@ -3,21 +3,21 @@ import {
   Controller,
   Get,
   Param,
-  ParseBoolPipe,
   ParseIntPipe,
   Post,
-  Query,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { UsersService } from '../../services/users/users.service';
 import { CreateUserDto } from '../../dtos/CreateUser.dto';
 
 @Controller('users')
 export class UsersController {
+  constructor(private userService: UsersService) {}
+
   @Get()
-  getUsers(@Query('sortDesc', ParseBoolPipe) sortDesc: boolean) {
-    console.log(sortDesc);
-    return [{ username: 'jdoe', email: 'jdoe@example.com' }];
+  getUsers() {
+    return this.userService.fetchUsers();
   }
 
   @Post()
