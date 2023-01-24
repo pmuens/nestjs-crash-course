@@ -24,7 +24,7 @@ export class UsersController {
   @UsePipes(new ValidationPipe())
   createUser(@Body() userData: CreateUserDto) {
     console.log(userData);
-    return {};
+    return this.userService.createUser(userData);
   }
 
   @Get(':id')
