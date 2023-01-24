@@ -30,6 +30,6 @@ export class UsersController {
   @Get(':id')
   getUserById(@Param('id', ParseIntPipe) id: number) {
     console.log(id);
-    return { id };
+    return this.userService.fetchUserById(id);
   }
 }
